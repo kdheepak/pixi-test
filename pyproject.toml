@@ -1,0 +1,53 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pixi-test"
+requires-python = ">=3.11"
+dependencies = [
+  "pyomo",
+  "matplotlib",
+  "numpy",
+  "pandas",
+  "plotly",
+  "colour",
+  "altair",
+  "psutil",
+  "networkx",
+  "highspy",
+]
+authors = [
+  { name = "model", email = "email@email.com" }
+]
+readme = "README.md"
+license = {file = "LICENSE"}
+dynamic = ["version"]
+
+[project.optional-dependencies]
+test = ["pytest"]
+
+[tool.pixi.project]
+channels = ["conda-forge"]
+platforms = ["linux-64", "osx-arm64", "osx-64", "win-64"]
+
+[tool.pixi.pypi-dependencies]
+pixi_test = { path = ".", editable = true }
+
+[tool.pixi.dependencies]
+ipython = ">=8.25.0,<8.26"
+python = ">=3.12.4,<3.13"
+jupyter = ">=1.0.0,<1.1"
+jupyterlab = ">=4.2.2,<4.3"
+pixi-kernel = ">=0.3.0,<0.4"
+
+[tool.pixi.feature.test.tasks]
+test = "pytest"
+
+[tool.setuptools]
+packages = ["pixi_test"]
+
+# Environments
+[tool.pixi.environments]
+default = { solve-group = "default" }
+test = { features = ["test"], solve-group = "default" }
